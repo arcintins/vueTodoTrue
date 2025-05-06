@@ -1,0 +1,29 @@
+@import './base.css';
+
+*{
+  margin: 0;
+  padding: 0;
+
+  outline: none;
+
+  font-family: system-ui;
+
+  font-size: 14px;
+}
+
+.container{
+  width: 1080px;
+  height: 100%;
+}
+
+.container--outer{
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input{
+  box-sizing: border-box;
+}
