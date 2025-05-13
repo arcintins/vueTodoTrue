@@ -24,10 +24,13 @@
     <div class="container">
       <main>
         <div class="main__column--left">
-          <SidebarComponent />
+          <SidebarComponent 
+          @changeSideBarFilter="changeSideBarFilter"/>
         </div>
         <div class="main__column--right">
-          <TaskbarComponent :searchInput="searchInput"/>
+          <TaskbarComponent 
+          :searchInput="searchInput"
+          :sideBarFilter="sideBarFilter"/>
         </div>
       </main>
     </div>
@@ -41,7 +44,11 @@ import TaskbarComponent from '../components/Taskbar/TaskbarComponent.vue'
 import { ref, type Ref } from 'vue'
 
 let searchInput: Ref<string> = ref('')
+let sideBarFilter: Ref<string> = ref('None')
 
+function changeSideBarFilter(filter: string){
+  sideBarFilter.value = filter
+}
 </script>
 
 <style scoped>

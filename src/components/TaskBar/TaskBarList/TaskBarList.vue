@@ -1,5 +1,5 @@
 <template>
-  <div class="tasklist" v-for="task in tasksView">
+  <div class="tasklist" v-for="task in reverseTaskDictionary(tasksView)">
     <div class="taskbar__item">
       <div class="taskbar__item--text">
         {{ task.text }}
@@ -8,7 +8,7 @@
         {{ formatDate(task.date) }}
       </div>
       <div class="taskbar__item--checkbox">
-        <input type="checkbox">
+        <input type="checkbox" v-model="props.tasks[task.id]['isComplited']">
       </div>
       <div class="taskbar__item--deleteButton">
         <button class="button deleteButton" @click="removeTask(props.tasks[task.id]['id'])">Delete</button>
@@ -19,16 +19,18 @@
 
 <script setup lang="ts">
 import { ref, watch, type Ref } from 'vue'
-import { type TaskDictionary } from '../ITask'
+import { type TaskDictionary } from '@/components/TaskBar/ITask'
+
+import { reverseTaskDictionary } from '../../../functions/reverseTaskDictionary'
 
 interface Props {
-  tasks: Ref<TaskDictionary>,
-  tasksShowFiltered: Ref<TaskDictionary>,
+  tasks: TaskDictionary,
+  tasksShowFiltered: TaskDictionary,
   isTasksFiltered: Boolean
 }
 const props = defineProps<Props>()
 
-let tasksView: Ref<TaskDictionary> = props.tasks
+let tasksView: TaskDictionary = props.tasks
 
 watch([() => props.isTasksFiltered, () => props.tasksShowFiltered], (): void => {
   if (props.isTasksFiltered) {
@@ -46,8 +48,8 @@ function removeTask(taskId: string): void{
 
 function formatDate(date: Date): string{
   let tmpDate = new Date(date)
-  return (tmpDate.getDate() >= 9 ? tmpDate.getDate() : '0' + tmpDate.getDate()) + '.' + 
-  (tmpDate.getMonth() >= 9 ? tmpDate.getMonth() : '0' + tmpDate.getMonth()) + '.' + 
+  return (tmpDate.getDate() > 9 ? tmpDate.getDate() : '0' + tmpDate.getDate()) + '.' + 
+  (tmpDate.getMonth() > 9 ? (tmpDate.getMonth() + 1) : '0' + (tmpDate.getMonth() + 1)) + '.' + 
   tmpDate.getFullYear()
 }
 

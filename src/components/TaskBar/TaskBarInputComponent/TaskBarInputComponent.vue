@@ -8,7 +8,7 @@
     ref="taskbarInput">
   </div>
   <div class="taskbar__item taskbar--input__helper">
-    <button @click="addTaskValidation">Добавить</button>
+    <button @click="addTaskValidation">Add Task</button>
   </div>
 </template>
 
